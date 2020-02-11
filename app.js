@@ -1,8 +1,26 @@
 var myModule = angular.module('Angello', []);
-myModule.controller('MainCtrl', function(){
+myModule.controller('MainCtrl', function(AngelloModel){
     var main = this;
+    
+    main.stories = AngelloModel.getStories();
+    main.createStory = function(){
+        var newStory = {
+            title : 'new user story',
+            description : 'input description',
+            criteria : '요구사항 정리 중...',
+            status : 'back log',
+            type : 'function',
+            reporter : 'none',
+            assignee : 'none'
+        }
+        main.stories.push(newStory);
+    }
 
-    main.stories = [
+})
+
+myModule.service('AngelloModel', function(){
+    var service = this;
+    var stories = [
         {
             title : '1st story',
             description : '1st user story',
@@ -32,23 +50,7 @@ myModule.controller('MainCtrl', function(){
         }
     ];
 
-    main.createStory = function(){
-        var newStory = {
-            title : 'new user story',
-            description : 'input description',
-            criteria : '요구사항 정리 중...',
-            status : 'back log',
-            type : 'function',
-            reporter : 'none',
-            assignee : 'none'
-        }
-        main.stories.push(newStory);
+    service.getStories = function(){
+        return stories;
     }
-})
-
-myModule.service('AngelloModel', function(){
-    var service = this;
-    var stories = [
-        
-    ]
 })
